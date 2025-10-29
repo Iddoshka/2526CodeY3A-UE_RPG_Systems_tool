@@ -1,0 +1,10 @@
+/.vscode
+/Content
+/DerivedDataCache
+/Intermediate
+/Saved
+/Plugins/RPGClassTool/Content
+/Plugins/RPGClassTool/Intermediate
+/Plugins/toolTest/Intermediate
+/Plugins/windowTest/Intermediate
+*.user

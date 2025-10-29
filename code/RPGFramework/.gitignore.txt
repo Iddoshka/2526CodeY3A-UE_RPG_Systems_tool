@@ -1,0 +1,6 @@
+Intermediate/
+Saved/
+.vscode/
+DerivedDataCache/
+Binaries/
+*.user
