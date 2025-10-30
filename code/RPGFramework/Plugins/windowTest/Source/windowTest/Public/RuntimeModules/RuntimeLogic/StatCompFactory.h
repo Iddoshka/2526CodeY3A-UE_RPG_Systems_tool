@@ -6,7 +6,6 @@
 #include "BaseStat.h"
 #include "StatCompFactory.generated.h"
 
-
 /**
  * 
  */

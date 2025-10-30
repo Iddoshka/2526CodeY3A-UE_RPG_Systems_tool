@@ -30,7 +30,7 @@ inline TArray<TWeakObjectPtr<UFunction>> GetAllFunctions(const UObject* Object,c
 }
 
 
-class FwindowTestModule : public IModuleInterface
+class FWindowTestModule : public IModuleInterface
 {
 public:
 

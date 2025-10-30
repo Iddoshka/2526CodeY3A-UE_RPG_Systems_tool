@@ -3,14 +3,14 @@
 #pragma once
 
 #include "Framework/Commands/Commands.h"
-#include "windowTestStyle.h"
+#include "WindowTestStyle.h"
 
-class FwindowTestCommands : public TCommands<FwindowTestCommands>
+class FWindowTestCommands : public TCommands<FWindowTestCommands>
 {
 public:
 
-	FwindowTestCommands()
-		: TCommands<FwindowTestCommands>(TEXT("windowTest"), NSLOCTEXT("Contexts", "windowTest", "windowTest Plugin"), NAME_None, FwindowTestStyle::GetStyleSetName())
+	FWindowTestCommands()
+		: TCommands<FWindowTestCommands>(TEXT("WindowTest"), NSLOCTEXT("Contexts", "WindowTest", "WindowTest Plugin"), NAME_None, FWindowTestStyle::GetStyleSetName())
 	{
 	}
 

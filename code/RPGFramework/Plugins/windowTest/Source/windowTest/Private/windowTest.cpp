@@ -1,8 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "windowTest.h"
-#include "windowTestStyle.h"
-#include "windowTestCommands.h"
+#include "WindowTest.h"
+#include "WindowTestStyle.h"
+#include "WindowTestCommands.h"
 #include "ToolMenus.h"
 #include "EditorModules/SlateUI/StatSystemUI.h"
 #include "RuntimeModules/RuntimeLogic/Parser.h"
@@ -12,35 +12,35 @@
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "UObject/SavePackage.h"
 
-static const FName windowTestTabName("windowTest");
+static const FName WindowTestTabName("WindowTest");
 
-#define LOCTEXT_NAMESPACE "FwindowTestModule"
+#define LOCTEXT_NAMESPACE "FWindowTestModule"
 
-void FwindowTestModule::StartupModule()
+void FWindowTestModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
-	FwindowTestStyle::Initialize();
-	FwindowTestStyle::ReloadTextures();
+	FWindowTestStyle::Initialize();
+	FWindowTestStyle::ReloadTextures();
 
-	FwindowTestCommands::Register();
+	FWindowTestCommands::Register();
 	
 	PluginCommands = MakeShareable(new FUICommandList);
 
 	PluginCommands->MapAction(
-		FwindowTestCommands::Get().OpenPluginWindow,
-		FExecuteAction::CreateRaw(this, &FwindowTestModule::PluginButtonClicked),
+		FWindowTestCommands::Get().OpenPluginWindow,
+		FExecuteAction::CreateRaw(this, &FWindowTestModule::PluginButtonClicked),
 		FCanExecuteAction());
 
-	UToolMenus::RegisterStartupCallback(FSimpleMulticastDelegate::FDelegate::CreateRaw(this, &FwindowTestModule::RegisterMenus));
+	UToolMenus::RegisterStartupCallback(FSimpleMulticastDelegate::FDelegate::CreateRaw(this, &FWindowTestModule::RegisterMenus));
 	
-	FGlobalTabmanager::Get()->RegisterNomadTabSpawner(windowTestTabName, FOnSpawnTab::CreateRaw(this, &FwindowTestModule::OnSpawnPluginTab))
-		.SetDisplayName(LOCTEXT("FwindowTestTabTitle", "windowTest"))
+	FGlobalTabmanager::Get()->RegisterNomadTabSpawner(WindowTestTabName, FOnSpawnTab::CreateRaw(this, &FWindowTestModule::OnSpawnPluginTab))
+		.SetDisplayName(LOCTEXT("FWindowTestTabTitle", "WindowTest"))
 		.SetMenuType(ETabSpawnerMenuType::Hidden);
 
 	if (GIsEditor)
 		CreateStatSystemBlueprintClasses();
 }
-void FwindowTestModule::ShutdownModule()
+void FWindowTestModule::ShutdownModule()
 {
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
@@ -49,14 +49,14 @@ void FwindowTestModule::ShutdownModule()
 
 	UToolMenus::UnregisterOwner(this);
 
-	FwindowTestStyle::Shutdown();
+	FWindowTestStyle::Shutdown();
 
-	FwindowTestCommands::Unregister();
+	FWindowTestCommands::Unregister();
 
-	FGlobalTabmanager::Get()->UnregisterNomadTabSpawner(windowTestTabName);
+	FGlobalTabmanager::Get()->UnregisterNomadTabSpawner(WindowTestTabName);
 }
 
-TSharedRef<SDockTab> FwindowTestModule::OnSpawnPluginTab(const FSpawnTabArgs& SpawnTabArgs)
+TSharedRef<SDockTab> FWindowTestModule::OnSpawnPluginTab(const FSpawnTabArgs& SpawnTabArgs)
 {
 	
 	
@@ -82,12 +82,12 @@ TSharedRef<SDockTab> FwindowTestModule::OnSpawnPluginTab(const FSpawnTabArgs& Sp
 		];
 }
 
-void FwindowTestModule::PluginButtonClicked()
+void FWindowTestModule::PluginButtonClicked()
 {
-	FGlobalTabmanager::Get()->TryInvokeTab(windowTestTabName);
+	FGlobalTabmanager::Get()->TryInvokeTab(WindowTestTabName);
 }
 
-void FwindowTestModule::RegisterMenus()
+void FWindowTestModule::RegisterMenus()
 {
 	// Owner will be used for cleanup in call to UToolMenus::UnregisterOwner
 	FToolMenuOwnerScoped OwnerScoped(this);
@@ -96,7 +96,7 @@ void FwindowTestModule::RegisterMenus()
 		UToolMenu* Menu = UToolMenus::Get()->ExtendMenu("LevelEditor.MainMenu.Window");
 		{
 			FToolMenuSection& Section = Menu->FindOrAddSection("WindowLayout");
-			Section.AddMenuEntryWithCommandList(FwindowTestCommands::Get().OpenPluginWindow, PluginCommands);
+			Section.AddMenuEntryWithCommandList(FWindowTestCommands::Get().OpenPluginWindow, PluginCommands);
 		}
 	}
 
@@ -105,7 +105,7 @@ void FwindowTestModule::RegisterMenus()
 		{
 			FToolMenuSection& Section = ToolbarMenu->FindOrAddSection("Settings");
 			{
-				FToolMenuEntry& Entry = Section.AddEntry(FToolMenuEntry::InitToolBarButton(FwindowTestCommands::Get().OpenPluginWindow));
+				FToolMenuEntry& Entry = Section.AddEntry(FToolMenuEntry::InitToolBarButton(FWindowTestCommands::Get().OpenPluginWindow));
 				Entry.SetCommandList(PluginCommands);
 			}
 		}
@@ -114,7 +114,7 @@ void FwindowTestModule::RegisterMenus()
 
 
 
-void FwindowTestModule::CreateStatSystemBlueprintClasses()
+void FWindowTestModule::CreateStatSystemBlueprintClasses()
 {
     TArray<FString> FileNames;
     
@@ -128,8 +128,8 @@ void FwindowTestModule::CreateStatSystemBlueprintClasses()
         
         if (DeserializedStatSystem)
         {
-            FString AssetName = FPaths::GetBaseFilename(FileNameOrDirectory);
-            FString PackageName = TEXT("/Game/StatSets/BP_StatSystem_") + AssetName;
+            FString AsSetSystemName = FPaths::GetBaseFilename(FileNameOrDirectory);
+            FString PackageName = TEXT("/Game/StatSets/BP_StatSystem_") + AsSetSystemName;
 
         	// Ensure Content folder exists
 				FString PackageFileName = FPackageName::LongPackageNameToFilename(
@@ -157,15 +157,15 @@ void FwindowTestModule::CreateStatSystemBlueprintClasses()
         UStatSystem* NewStatSystem = NewObject<UStatSystem>(
 	   Package,
 	   UStatSystem::StaticClass(),
-	   *AssetName,
+	   *AsSetSystemName,
 	   RF_Public | RF_Standalone | RF_Transactional
 	   );
         	if (!NewStatSystem)
         	{
-				UE_LOG(LogTemp, Error, TEXT("Failed to create blueprint: %s"), *AssetName);
+				UE_LOG(LogTemp, Error, TEXT("Failed to create blueprint: %s"), *AsSetSystemName);
 				return false;
 			}
-        	NewStatSystem->SetName(DeserializedStatSystem->GetSetName());
+        	NewStatSystem->SetSystemName(DeserializedStatSystem->GetSystemName());
            
 			// Copy all stats
 			TArray<UBaseStat*> SourceStats = DeserializedStatSystem->GetAllStats();
@@ -214,4 +214,4 @@ void FwindowTestModule::CreateStatSystemBlueprintClasses()
 
 #undef LOCTEXT_NAMESPACE
 	
-IMPLEMENT_MODULE(FwindowTestModule, windowTest)
+IMPLEMENT_MODULE(FWindowTestModule, WindowTest)

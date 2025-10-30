@@ -125,72 +125,26 @@ protected:
 };
 
 
-UCLASS()
-class UCurveStat : public UBaseStatComponent
-{
-	GENERATED_BODY()
-	DECLARE_MULTICAST_DELEGATE(FLevelUP);
-public:
-	UCurveStat()
-	{
-		Priority = 0;
-		Name = "Curve Component";
-	}
-	virtual float ModifyValue(const float& baseValue,const float& deltaTime) override;
-	UFUNCTION()
-	virtual void Init(UBaseStat* ownerStat) override;
-	virtual TSharedRef<SWidget> UIInformation() override;
-	void LevelUP() const {LevelUpDelegate.Broadcast();};
-	
-	FLevelUP LevelUpDelegate;
-private:
-	virtual void OwnerSetup(UBaseStat* ownerStat);
-	void ResetOptions(UBaseStat* ownerStat);
-	int AddToCurrentOptions(const TSharedPtr<FString>& InName);
-	void DeleteFromCurrentOptions(uint32 idx);
-	void ResetCurrentOptions();
-	FCurve& ConstructCurve(const int Key, bool Pin = true);
-	void ChooseNewCurve();
-	int CurrentKey = 0;
-	
-	TSharedPtr<FGraphWidget> CurveWidget;
-	TArray<TSharedPtr<FString>> CurrentOptions = {MakeShared<FString>("New Curve")};
-	TArray<TPair<TSharedRef<FOnValueChanged>,FFloat*>> ValueOptions;
-	TArray<FString> Options;
-	void OnSelectionChanged(const TSharedPtr<FString>& InItem, ESelectInfo::Type SelectInfo);
-	TSharedPtr<SWindow> OptionWindow;
-	UPROPERTY()
-	TMap<int,FCurve> Curves;
-};
+
 
 
 UCLASS(Blueprintable,BlueprintType)
 class WINDOWTEST_API UBaseStat : public UObject
 {
-
 	GENERATED_BODY()
-
 	
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnStatNameChange,const FText&);
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnStatValueChange,const float&);
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnStatsChange,UBaseStat*);
-	
 
-	UDELEGATE(BlueprintCallable)
-	DECLARE_DYNAMIC_DELEGATE_OneParam(FValueChange, const float&, InValue);
-
-private:
-	DECLARE_MULTICAST_DELEGATE_OneParam(FOnValueDecreased,const float&);
-	DECLARE_MULTICAST_DELEGATE_OneParam(FOnValueIncreased,const float&);
 public:
-	UBaseStat(){CName = GetName(), ValueChange.BindUFunction(this, "SetValue" );}
+	UBaseStat(){CName = GetName();}
 	void Initialize(const FString& name, const float value, const TArray<UBaseStatComponent*>& InComponents = TArray<UBaseStatComponent*>())
 	{CName = name, BaseValue = value, MaxVal = BaseValue, AddComponents(InComponents);}
 	TSharedPtr<SWidget> CreateStatUI();
 	UFUNCTION(BlueprintCallable, Category = "Stats")
 	TArray<UBaseStatComponent*> GetComponents() {return components;};
-	UFUNCTION()
-	void SetValue(const float& Value);
+
 	void Update(const float& DeltaTime);
 	 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
@@ -213,11 +167,6 @@ public:
 	FOnStatNameChange OnStatNameChanged;
 	FOnStatValueChange OnStatValueChanged;
 	FOnStatsChange OnStatsChanged;
-	FOnValueDecreased OnValueDecreased;
-	FOnValueIncreased OnValueIncreased;
-
-	UPROPERTY(BlueprintReadWrite);
-	FValueChange ValueChange;
 	
 	UPROPERTY(BlueprintReadOnly, Category = "Stats")
 	FString CName; // the name of the stat
@@ -234,8 +183,6 @@ private:
 	UPROPERTY(BlueprintReadOnly, Category = "Stats", meta=(AllowPrivateAccess))
 	TArray<UBaseStatComponent*> components;
 };
-
-
 
 UCLASS(Blueprintable,BlueprintType)
 class WINDOWTEST_API URegenerate : public UBaseStatComponent
@@ -268,63 +215,5 @@ private:
 	UPROPERTY(BlueprintReadWrite , Category = "Health" , meta = (AllowPrivateAccess))
 	bool isActive = false;
 };
-UCLASS(Blueprintable,BlueprintType)
-class WINDOWTEST_API UProgress : public UBaseStatComponent
-{
-	GENERATED_BODY()
-	
-public:
-	UProgress()
-	{
-		Name= "Progression Component";
-	}
-	UProgress(const float& StartValue);
-	virtual float ModifyValue(const float& baseValue,const float& deltaTime) override;
-	virtual void Init(UBaseStat* ownerStat) override;
 
-	void SetCeiling(const float& ceiling) {Ceiling = ceiling;};
-	float GetCeiling() const {return Ceiling;}
-
-	void AddToValue(const float& InValue);
-	void SetValue(const float& InValue);
-	float GetValue() const {return CurrentValue;}
-
-	bool CheckProgress() const;
-	
-private:
-	virtual TSharedRef<SWidget> UIInformation() override;
-	
-	UPROPERTY(meta=(Level="NoLevelUP"))
-	float CurrentValue;
-
-	float Ceiling = 0.f;
-	FSimpleMulticastDelegate OnFilledProgress;
-	bool PositiveDir = true;
-};
-
-UCLASS(Blueprintable,BlueprintType)
-class WINDOWTEST_API UDecay : public UBaseStatComponent
-{
-
-GENERATED_BODY()
-public:
-	UDecay()
-	{
-		Name= "Decay Component";
-	};
-	UDecay(const float& rate, const float& delay);
-	virtual float ModifyValue(const float& baseValue,const float& deltaTime) override;
-	virtual void Update(const float& deltaTime) override;
-	virtual void Init(UBaseStat* ownerStat) override;
-private:
-
-	virtual TSharedRef<SWidget> UIInformation() override;
-	UPROPERTY()
-	float Rate = 0.;
-	UPROPERTY()
-	float Delay = 0.f;
-	float timeSinceLastDamage = 0.f;
-	float minValue = 0.f;
-	bool isActive = false;
-};
 

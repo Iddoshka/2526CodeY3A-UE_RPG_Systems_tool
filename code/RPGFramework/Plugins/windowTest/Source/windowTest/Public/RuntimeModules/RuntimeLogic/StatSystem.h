@@ -1,6 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "BaseStat.h"
@@ -8,32 +6,37 @@
 #include "StatSystem.generated.h"
 
 class UStatCompFactory;
-struct StatBox;
-/**
- * 
- */
 
-
-
-UCLASS(BlueprintType, ClassGroup=(Custom),meta=(BlueprintSpawnableComponent))
+UCLASS(BlueprintType, meta=(BlueprintSpawnableComponent))
 class WINDOWTEST_API UStatSystem : public UActorComponent
 {
-
 	GENERATED_BODY()
 	
 public:
+	static TArray<TWeakObjectPtr<UFunction>> GetComponentFunctions();
 	
-	void AddStat(UBaseStat* inStat){stats.Add(inStat);}
+public:
+	UStatSystem();
+	
+public:
+	UFUNCTION(BlueprintCallable, Category="StatSystem")
+	void AddStat(UBaseStat* inStat) { stats.Add(inStat); }
+	UFUNCTION(BlueprintCallable, Category="StatSystem")
+	void DeleteStat(int idx);
+	
+	UFUNCTION(BlueprintCallable, Category="StatSystem")
+	TArray<UBaseStat*> GetAllStats() const { return stats; }
+
+	UFUNCTION(BlueprintCallable, Category="StatSystem")
+	void SetSystemName(const FString& InName) {Name = InName;}
+	UFUNCTION(BlueprintCallable, Category="StatSystem")
+	FString GetSystemName() {return Name;}
+	
+public:
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	virtual void BeginPlay() override;
-	
-	TArray<UBaseStat*> GetAllStats() const {return stats;}
 
-	static TArray<TWeakObjectPtr<UFunction>> GetComponentFunctions();
-	UStatSystem();
-	~UStatSystem();
-	void SetName(const FString& InName) {Name = InName;}
-	FString GetSetName() {return Name;}
+public:
 #if WITH_EDITOR
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override
 	{
@@ -66,12 +69,12 @@ public:
 		}
 	}
 #endif
-private:
+	
+public:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere ,meta=(AllowPrivateAccess))
 	TArray<UBaseStat*> stats;
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere ,meta=(AllowPrivateAccess))
 	FString Name = "";
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Paths", 
-		  meta = (RelativeToGameContentDir, ContentDir),meta=(AllowPrivateAccess))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Paths", meta = (RelativeToGameContentDir, ContentDir),meta=(AllowPrivateAccess))
 	FDirectoryPath Directory;
 };

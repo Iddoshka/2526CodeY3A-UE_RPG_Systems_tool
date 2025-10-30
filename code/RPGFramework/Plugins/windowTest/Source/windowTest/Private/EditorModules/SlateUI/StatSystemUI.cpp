@@ -73,7 +73,7 @@ void StatSystemUI:: Construct(const FArguments& InArgs)
 						.Text_Lambda([this]()
 						{
 							auto boo = IsValid();
-							auto test =  boo? CurrentSystem->GetSetName() : 
+							auto test =  boo? CurrentSystem->GetSystemName() : 
 							"";
 							return FText::FromString(test);
 						})
@@ -163,7 +163,7 @@ void StatSystemUI::GetNames()
 
 void StatSystemUI::SaveSetFunction()
 {
-	if (CurrentSystem->GetSetName().IsEmpty())
+	if (CurrentSystem->GetSystemName().IsEmpty())
 	{
 		TSharedPtr<SWindow> Window;
 		TSharedPtr<SEditableConformationBox> temp; 
@@ -172,7 +172,7 @@ void StatSystemUI::SaveSetFunction()
 				.acceptFunction_Lambda([this](){FJS::SerializeSet(CurrentSystem);GetNames(); return FReply::Handled();})
 				.cancelFunction(FOnClicked())
 				.tempWindow(Window)
-				.TextSave_Lambda([this](const FString& InText){this->CurrentSystem->SetName(InText);}),
+				.TextSave_Lambda([this](const FString& InText){this->CurrentSystem->SetSystemName(InText);}),
 				FText::FromString("Confirmation"),FVector2D(200,100));
 		temp->Window = Window;
 	}

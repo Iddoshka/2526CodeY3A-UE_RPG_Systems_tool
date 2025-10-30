@@ -12,8 +12,12 @@
 	],
 	"Plugins": [
 		{
-			"Name": "windowTest",
+			"Name": "WindowTest",
 			"Enabled": true
-		}
+		},
+        {
+            "Name": "RPGClassTool",
+            "Enabled": true
+        }
 	]
 }

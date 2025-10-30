@@ -1,6 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "windowTestStyle.h"
+#include "WindowTestStyle.h"
 #include "Styling/SlateStyleRegistry.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Slate/SlateGameResources.h"
@@ -9,9 +9,9 @@
 
 #define RootToContentDir Style->RootToContentDir
 
-TSharedPtr<FSlateStyleSet> FwindowTestStyle::StyleInstance = nullptr;
+TSharedPtr<FSlateStyleSet> FWindowTestStyle::StyleInstance = nullptr;
 
-void FwindowTestStyle::Initialize()
+void FWindowTestStyle::Initialize()
 {
 	if (!StyleInstance.IsValid())
 	{
@@ -20,33 +20,33 @@ void FwindowTestStyle::Initialize()
 	}
 }
 
-void FwindowTestStyle::Shutdown()
+void FWindowTestStyle::Shutdown()
 {
 	FSlateStyleRegistry::UnRegisterSlateStyle(*StyleInstance);
 	ensure(StyleInstance.IsUnique());
 	StyleInstance.Reset();
 }
 
-FName FwindowTestStyle::GetStyleSetName()
+FName FWindowTestStyle::GetStyleSetName()
 {
-	static FName StyleSetName(TEXT("windowTestStyle"));
+	static FName StyleSetName(TEXT("WindowTestStyle"));
 	return StyleSetName;
 }
 
 const FVector2D Icon16x16(16.0f, 16.0f);
 const FVector2D Icon20x20(20.0f, 20.0f);
 
-TSharedRef< FSlateStyleSet > FwindowTestStyle::Create()
+TSharedRef< FSlateStyleSet > FWindowTestStyle::Create()
 {
-	TSharedRef< FSlateStyleSet > Style = MakeShareable(new FSlateStyleSet("windowTestStyle"));
-	Style->SetContentRoot(IPluginManager::Get().FindPlugin("windowTest")->GetBaseDir() / TEXT("Resources"));
+	TSharedRef< FSlateStyleSet > Style = MakeShareable(new FSlateStyleSet("WindowTestStyle"));
+	Style->SetContentRoot(IPluginManager::Get().FindPlugin("WindowTest")->GetBaseDir() / TEXT("Resources"));
 
-	Style->Set("windowTest.OpenPluginWindow", new IMAGE_BRUSH_SVG(TEXT("PlaceholderButtonIcon"), Icon20x20));
+	Style->Set("WindowTest.OpenPluginWindow", new IMAGE_BRUSH_SVG(TEXT("PlaceholderButtonIcon"), Icon20x20));
 
 	return Style;
 }
 
-void FwindowTestStyle::ReloadTextures()
+void FWindowTestStyle::ReloadTextures()
 {
 	if (FSlateApplication::IsInitialized())
 	{
@@ -54,7 +54,7 @@ void FwindowTestStyle::ReloadTextures()
 	}
 }
 
-const ISlateStyle& FwindowTestStyle::Get()
+const ISlateStyle& FWindowTestStyle::Get()
 {
 	return *StyleInstance;
 }

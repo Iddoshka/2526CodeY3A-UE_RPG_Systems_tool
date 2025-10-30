@@ -3,16 +3,10 @@
 
 #include "EditorModules/SlateUI/GraphWidget.h"
 
-#include <array>
-
-#include "AnimAssetFindReplace.h"
 #include "SlateOptMacros.h"
-#include  "Tree/CurveEditorTree.h"
 #include  "CurveEditor.h"
-#include "LocalizationDescriptor.h"
 #include "SCurveEditorPanel.h"
-#include "Animation/AnimAttributes.h"
-#include "RuntimeModules/RuntimeLogic/BaseStat.h"
+#include "RuntimeModules/RuntimeLogic/CurveComponent.h"
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 

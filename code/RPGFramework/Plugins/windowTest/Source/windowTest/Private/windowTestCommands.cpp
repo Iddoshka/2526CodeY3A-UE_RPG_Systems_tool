@@ -1,12 +1,12 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "windowTestCommands.h"
+#include "WindowTestCommands.h"
 
-#define LOCTEXT_NAMESPACE "FwindowTestModule"
+#define LOCTEXT_NAMESPACE "FWindowTestModule"
 
-void FwindowTestCommands::RegisterCommands()
+void FWindowTestCommands::RegisterCommands()
 {
-	UI_COMMAND(OpenPluginWindow, "windowTest", "Bring up windowTest window", EUserInterfaceActionType::Button, FInputChord());
+	UI_COMMAND(OpenPluginWindow, "WindowTest", "Bring up WindowTest window", EUserInterfaceActionType::Button, FInputChord());
 }
 
 #undef LOCTEXT_NAMESPACE

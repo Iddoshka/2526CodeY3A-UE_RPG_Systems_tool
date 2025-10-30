@@ -2,7 +2,7 @@
 
 
 #include "RuntimeModules/RuntimeLogic/StatSystem.h"
-#include "windowTest.h"
+#include "WindowTest.h"
 #include "RuntimeModules/RuntimeLogic/StatCompFactory.h"
 #include "EditorModules/SlateUI/StatSystemUI.h"
 #include "RuntimeModules/RuntimeLogic/Parser.h"
@@ -24,6 +24,11 @@
 	
 }*/
 
+
+void UStatSystem::DeleteStat(int idx)
+{
+	stats.Remove(stats[idx]);
+}
 
 void UStatSystem::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
@@ -51,9 +56,5 @@ TArray<TWeakObjectPtr<UFunction>> UStatSystem::GetComponentFunctions()
 UStatSystem::UStatSystem()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-}
-
-UStatSystem::~UStatSystem()
-{
 }
 

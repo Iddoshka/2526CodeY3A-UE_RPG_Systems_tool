@@ -3,9 +3,9 @@
 
 #include "RuntimeModules/RuntimeLogic/StatCompFactory.h"
 
-#include "Components/ProgressBar.h"
-#include "Misc/OutputDeviceNull.h"
 #include "RuntimeModules/RuntimeLogic/BaseStat.h"
+#include "RuntimeModules/RuntimeLogic/StatComponents.h"
+#include "RuntimeModules/RuntimeLogic/CurveComponent.h"
 
 UStatCompFactory* UStatCompFactory::StartBuild(UObject* Outer,const FString& Name, float baseValue)
 {

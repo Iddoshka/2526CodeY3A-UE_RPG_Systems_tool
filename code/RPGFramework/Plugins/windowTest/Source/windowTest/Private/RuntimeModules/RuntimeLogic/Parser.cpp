@@ -17,7 +17,7 @@ void FStatJsonSerializer::SerializeSet(UStatSystem* StatSet)
 		return;
 	}
 	auto tempSerializer = MakeShared<FStatJsonSerializer>(FStatJsonSerializer());
-	FString SavePath = tempSerializer->GetPath() / StatSet->GetSetName();
+	FString SavePath = tempSerializer->GetPath() / StatSet->GetSystemName();
 	for (auto Stat : StatSet->GetAllStats())
 	{
 		tempSerializer->SerializeStat(Stat,SavePath / Stat->CName + CompExtension,tempSerializer);
@@ -114,7 +114,7 @@ UStatSystem* FStatJsonSerializer::DeSeializeSet(const FString& Path,  TSharedPtr
 	}
 	int32 idx;
 	Path.FindLastChar('/',idx);
-	ParsedSet->SetName(Path.RightChop(idx + 1));
+	ParsedSet->SetSystemName(Path.RightChop(idx + 1));
 	return ParsedSet;
 }
 
@@ -147,7 +147,7 @@ UBaseStatComponent* FStatJsonSerializer::DeseializeComponent(const TSharedPtr<FJ
 	UClass* ComponentClass = FindObject<UClass>(nullptr, *ClassName);
 	if (!ComponentClass)
 	{
-		FString ClassPath = FString::Printf(TEXT("/Script/windowTest.%s"), *ClassName);
+		FString ClassPath = FString::Printf(TEXT("/Script/WindowTest.%s"), *ClassName);
 		ComponentClass = LoadObject<UClass>(nullptr, *ClassPath);
 	}
 	if (!ComponentClass || !ComponentClass->IsChildOf(UBaseStatComponent::StaticClass()))

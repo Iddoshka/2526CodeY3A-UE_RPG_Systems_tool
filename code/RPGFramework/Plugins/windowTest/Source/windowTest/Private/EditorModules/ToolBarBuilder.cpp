@@ -6,7 +6,7 @@
 #include "SlateOptMacros.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
-#define LOCTEXT_NAMESPACE "FwindowTestModule" 
+#define LOCTEXT_NAMESPACE "FWindowTestModule" 
 
 void UMyToolbarController::Initialize(const FString& iconName, const FString& buttonName, OnClick& OCFunction,
 	CanClick& CSFunction, IsVisible IVFunction)

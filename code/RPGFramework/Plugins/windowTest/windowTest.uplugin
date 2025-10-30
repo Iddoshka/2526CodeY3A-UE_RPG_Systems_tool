@@ -2,7 +2,7 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "windowTest",
+	"FriendlyName": "WindowTest",
 	"Description": "",
 	"Category": "Other",
 	"CreatedBy": "kosherbutchr",
@@ -10,13 +10,13 @@
 	"DocsURL": "",
 	"MarketplaceURL": "",
 	"SupportURL": "",
-	"CanContainContent": false,
+	"CanContainContent": true,
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "windowTest",
+			"Name": "WindowTest",
 			"Type": "Editor",
 			"LoadingPhase": "PostEngineInit"
 		}

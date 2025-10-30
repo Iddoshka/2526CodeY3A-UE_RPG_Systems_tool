@@ -5,7 +5,7 @@
 #include "Styling/SlateStyle.h"
 
 /**  */
-class FwindowTestStyle
+class FWindowTestStyle
 {
 public:
 
